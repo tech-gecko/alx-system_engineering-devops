@@ -1,2 +1,2 @@
 #!/bin/bash
-NUM="$(echo $1.00)"
+printf %.2f $NUM
