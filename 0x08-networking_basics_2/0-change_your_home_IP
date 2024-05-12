@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This script changes the IP addresses of the facebook and localhost hostnames.
+sudo bash -c "echo '8.8.8.8	facebook.com' >> /etc/hosts"
+sudo bash -c "echo '127.0.0.2	localhost' >> /etc/hosts"
