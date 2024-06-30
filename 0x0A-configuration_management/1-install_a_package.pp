@@ -9,5 +9,10 @@ package { 'python3-pip':
 python::pip { 'flask':
   ensure       => '2.1.0',
   pip_provider => 'pip3',
-  require      => Package['python3-pip'],
+}
+
+# Uses the puppet-python module to manage the installation of Werkzeug
+python::pip { 'werkzeug':
+  ensure       => '2.1.1',
+  pip_provider => 'pip3',
 }
