@@ -8,12 +8,13 @@ apt-get -y install nginx
 
 ufw allow 'Nginx HTTP'
 
-html="var/www/html/index.nginx-debian.html"
+html="/var/www/html/index.nginx-debian.html"
 echo "Hello World!" > "$html"
 
-config="etc/nginx/sites-available/default"
+config="/etc/nginx/sites-available/default"
 requirement="\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/x.com\/IAshimonye83170;\n\t}\n}"
 sed -i -r "s/^}$/$requirement/" "$config"
 
 service nginx restart
 nginx -t
+nginx -s reload
