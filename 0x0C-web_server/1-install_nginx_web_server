@@ -6,7 +6,7 @@ apt-get -y install nginx
 
 ufw allow 'Nginx HTTP'
 
-html="var/www/html/index.html"
+html="/var/www/html/index.nginx-debian.html"
 echo "Hello World!" > "$html"
 service nginx restart
 nginx -t
