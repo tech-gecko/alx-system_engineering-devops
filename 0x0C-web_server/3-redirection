@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# This script configures a brand new Ubuntu machine to these requirements:
+# /redirect_me is redirecting to another page.
+# The redirection must be a "301 Moved Permanently".
+
+apt-get -y update
+apt-get -y install nginx
+
+ufw allow 'Nginx HTTP'
+
+html="var/www/html/index.nginx-debian.html"
+echo "Hello World!" > "$html"
+
+config="etc/nginx/sites-available/default"
+requirement="\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/x.com\/IAshimonye83170;\n\t}\n}"
+sed -i -r "s/^}$/$requirement/" "$config"
+
+service nginx restart
+nginx -t
