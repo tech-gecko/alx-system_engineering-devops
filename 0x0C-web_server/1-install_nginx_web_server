@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This script installs and configures nginx on my web server.
+
+apt-get -y update
+apt-get -y install nginx
+
+ufw allow 'Nginx HTTP'
+service nginx restart
+
+html="var/www/html/index.html"
+echo "Hello World!" > "$html"
+nginx -s reload
