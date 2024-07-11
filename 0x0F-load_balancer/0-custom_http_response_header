@@ -1,28 +1,25 @@
 #!/usr/bin/env bash
-# This script configures a brand new Ubuntu machine to the requirements asked in this task.
-# Requirements:
-# Configure Nginx so that its HTTP response contains a custom header (on "web-01" and "web-02")
-# - The name of the custom HTTP header must be "X-Served-By".
-# - The value of the custom HTTP header must be the hostname of the server Nginx is running on.
+# This script configures a brand new Ubuntu machine to some requirements.
 
 apt-get -y update
 apt-get -y install nginx
 
-html="var/www/example.com/html/index.html"
-echo "HTML content!" > "$html"
+ufw allow 'Nginx HTTP'
 
-config="etc/nginx/sites-available/default"
-config_content="\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/x.com\/IAshimonye83170;\n\t}\n}"
+html="/var/www/html/index.nginx-debian.html"
+echo "Hello World!" > "$html"
 
-sed -i -r "s/^}$/$config_content/" "$config"
+config="/etc/nginx/sites-available/default"
+requirement="\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/x.com\/IAshimonye83170;\n\t}\n}"
+sed -i -r "s/^}$/$requirement/" "$config"
 
-error_html="var/www/example.com/html/404.html"
-echo "This is an error page!" > "$error_html"
-
-error_content="\n\terror_page 404 \/404.html;\n\tlocation \/404.html {\n\t\tinternal;\n\t}\n}"
-
-sed -i -r "s/^}$/$error_content/" "$config"
+error_html="/var/www/html/404.html"
+echo "Ceci n'est pas une page" > "$error_html"
+error_requirement="\n\terror_page 404 \/404.html;\n\tlocation \/404.html {\n\t\tinternal;\n\t}\n}"
+sed -i -r "s/^}$/$error_requirement/" "$config"
 
 sed -i "/^\troot/i \ \tadd_header X-Served-By \$hostname;" "$config"
 
 service nginx restart
+nginx -t
+nginx -s reload
