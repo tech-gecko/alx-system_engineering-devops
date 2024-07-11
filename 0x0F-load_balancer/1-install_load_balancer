@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# This script installs and configures HAproxy on my server, "lb-01", according to the following requirements:
+# - Configures HAproxy so that it sends traffic to "web-01" and "web-02" servers.
+# - Distributes requests using a roundrobin algorithm.
+# - Makes sure that HAproxy can be managed via an init script.
+
+apt-get -y update
+apt-get -y install --no-install-recommends software-properties-common
+add-apt-repository ppa:vbernat/haproxy-2.9
+apt-get -y install haproxy=2.9.\*
+
+config="/etc/haproxy/haproxy.cfg"
+cp -a "$config"{,.orig}
+
+printf "
+frontend haproxy-main
+	bind *:80
+	default_backend web-servers
+
+backend web-servers
+	balance roundrobin
+	server 518905-web-01 100.25.14.61:80 check 
+	server 518905-web-02 54.174.78.201:80 check
+" >> "$config"
+
+echo "ENABLED=1" >> /etc/default/haproxy
+
+service haproxy restart
+haproxy -c -f "$config"
