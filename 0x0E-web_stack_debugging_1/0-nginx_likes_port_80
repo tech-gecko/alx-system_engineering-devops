@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script installs Nginx on an Ubuntu container.
+
+apt-get -y update
+apt-get -y install nginx
+
+service nginx restart
