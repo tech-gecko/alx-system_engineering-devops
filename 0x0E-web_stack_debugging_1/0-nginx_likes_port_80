@@ -2,7 +2,7 @@
 #  This script installs Nginx and configures it to listen
 #+ on port 80 of all the server's active IPv4 IPs.
 
-printf "
+printf "%s" "
 server {
 	listen 80;
 	listen [::]:80;
@@ -14,7 +14,7 @@ server {
 	server_name _;
 
 	location / {
-		try_files $url $url/ = 404;
+		try_files _ = 404;
 	}
 }
 " > /etc/nginx/sites-enabled/default
