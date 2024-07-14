@@ -4,9 +4,8 @@
 
 printf "%s" "
 server {
-	listen 80;
-	listen [::]:80;
-	listen default_server;
+	listen 80 default_server; 
+	listen [::]:80 default_server;
 
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian.html;
@@ -14,7 +13,7 @@ server {
 	server_name _;
 
 	location / {
-		try_files _ = 404;
+		try_files $url $url/ = 404;
 	}
 }
 " > /etc/nginx/sites-enabled/default
