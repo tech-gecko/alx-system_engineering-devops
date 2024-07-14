@@ -2,10 +2,21 @@
 #  This script installs Nginx and configures it to listen
 #+ on port 80 of all the server's active IPv4 IPs.
 
-apt-get -y update
-apt-get -y install nginx
+printf "
+server {
+	listen 80;
+	listen [::]:80;
+	listen default_server;
 
-rm -rf /etc/nginx/sites-enabled/
-ln -s /etc/nginx/sites-available/ /etc/nginx/sites-enabled/
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
 
-service nginx start
+	server_name _;
+
+	location / {
+		try_files $url $url/ = 404;
+	}
+}
+" > /etc/nginx/sites-enabled/default
+
+service nginx restart
