@@ -13,7 +13,7 @@ server {
 	server_name _;
 
 	location / {
-		try_files \$url \$url/ = 404;
+		try_files \$url \$url/ =404;
 	}
 }
 "
