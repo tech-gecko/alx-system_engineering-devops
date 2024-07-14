@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# This script installs Nginx on an Ubuntu container.
+#  This script installs Nginx and configures it to listen
+#+ on port 80 of all the server's active IPv4 IPs.
 
 apt-get -y update
 apt-get -y install nginx
