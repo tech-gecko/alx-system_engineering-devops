@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# sets up ufw firewall and blocks all incoming traffic
+# Allowing only port 22 ssh, 80 http and 433 https
+
+ufw default allow outgoing
+ufw default deny incoming
+
+ufw allow OpenSSH # /etc/service file the port is located
+ufw allow ssh     # allows default port 22, redundant though
+ufw allow http    # HTTP
+ufw allow https   # HTTPS
+
+# we could also do "allow [port_number]"
+ufw enable
