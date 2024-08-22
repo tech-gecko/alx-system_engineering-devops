@@ -1,0 +1,1 @@
+# This directory contains puppet files that fix server issues (failing requests). 1000 HTTP requests were generated using ApacheBench, and the puppet file fix made sure no failed requests were recorded any longer.
